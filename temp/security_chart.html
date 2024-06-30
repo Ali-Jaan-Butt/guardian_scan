@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Headers Chart</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Security Headers Chart</h1>
+    <form action="{% url 'download_pdf' %}" method="get">
+        <button type="submit" class="download">Download PDF</button>
+    </form>
+    <div>
+        {{ chart|safe }}
+    </div>
+    <h3>Miss Credentials</h3>
+    <li>
+        {{ access }}
+    </li>
+    <li>
+        {{ user_data }}
+    </li>
+    {% for item in user_access %}
+        <li>{{ item }}</li>
+    {% endfor %}
+    <style>
+        .download{
+            width: 20%;
+            padding: 0.75rem;
+            margin: 1rem 0;
+            border: none;
+            border-radius: 5px;
+            background: #001F3F;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .download:hover{
+            background: #001F3F
+        }
+    </style>
+</body>
+</html>
