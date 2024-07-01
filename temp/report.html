@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .graph {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h3>Miss Credentials</h3>
+    <ul>
+        <li>
+            {{ access }}
+        </li>
+        <li>
+            {{ user_data }}
+        </li>
+        {% for item in user_access %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Security Headers</h3>
+    <div class="graph">
+        {% load static %}
+        <img src="{% static 'figures/figure.png' %}" alt="My image">
+    </div>
+</body>
+</html>

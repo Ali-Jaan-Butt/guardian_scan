@@ -9,6 +9,20 @@ import requests
 import plotly.express as px
 import plotly.io as pio
 import pandas as pd
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
+import pyautogui
+from django.core.files.storage import default_storage
+from PIL import Image
+import os
+import PyPDF2
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import landscape, letter
+from reportlab.lib.utils import ImageReader
 
 def myapp(request):
     client = pymongo.MongoClient('mongodb://localhost:27017/')
@@ -199,6 +213,9 @@ def scan_web(request):
             }
             fig = px.bar(data, x='Missing Configurations', y='Presence', title='Security Headers Report')
             chart_html = pio.to_html(fig, full_html=False)
+            fig.write_image("scanapp/static/figures/figure.png", format='png')
+            screenshot = pyautogui.screenshot()
+            screenshot.save('figure/figure.png')
         else:
             print(f"All recommended security headers are present on {url}.")
         # Second Module
@@ -226,6 +243,7 @@ def scan_web(request):
                 user_access.append(f"Security Flaw: Unauthenticated access to {endpoint}!")
             else:
                 user_access.append(f"Access to {endpoint} is secured.")
+        global context
         context = {
             'chart': chart_html,
             'access': access,
@@ -235,46 +253,42 @@ def scan_web(request):
         return render(request, 'temp/security_chart.html', context)
     return gard_scan(request)
 
-from django.http import HttpResponse
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from html.parser import HTMLParser
-
-class HTMLToPDFParser(HTMLParser):
-    def __init__(self, canvas):
-        super().__init__()
-        self.canvas = canvas
-        self.y = 750  # Start height for text in PDF
-        self.styles = {'h1': 24, 'h2': 18, 'p': 12}
-        self.current_style = 'p'
-        self.offset = 14
-
-    def handle_starttag(self, tag, attrs):
-        if tag in self.styles:
-            self.current_style = tag
-
-    def handle_endtag(self, tag):
-        if tag in self.styles:
-            self.y -= self.offset  # Add space after each element
-
-    def handle_data(self, data):
-        if self.current_style in self.styles:
-            self.canvas.setFont("Helvetica", self.styles[self.current_style])
-            self.canvas.drawString(72, self.y, data.strip())
-            self.y -= self.styles[self.current_style] + 2  # Line height
-
-def convert_html_to_pdf(html_content, response):
-    c = canvas.Canvas(response, pagesize=letter)
-    parser = HTMLToPDFParser(c)
-    parser.feed(html_content)
-    c.save()
-
-def download_pdf(request):
-    # with open('temp/security_chart.html', 'r', encoding='utf-8') as file:
-    #     html_content = file.read()
-    # response = HttpResponse(content_type='application/pdf')
-    # response['Content-Disposition'] = 'attachment; filename="security_headers_report.pdf"'
-    res = requests.get('http://127.0.0.1:8000/scan-start')
-    text = res.text
-    convert_html_to_pdf(text, 'temp/report.pdf')
-    return render(request, 'temp/security_chart.html')
+def html_to_pdf_view(request):
+    def convert_image_to_pdf(image_path, pdf_path):
+        pdf_width = 800
+        image = Image.open(image_path)
+        if image.mode in ("RGBA", "P"):
+            image = image.convert("RGB")
+        img_width, img_height = image.size
+        aspect_ratio = img_height / img_width
+        pdf_height = pdf_width * aspect_ratio
+        c = canvas.Canvas(pdf_path, pagesize=(pdf_width, pdf_height))
+        image_reader = ImageReader(image)
+        c.drawImage(image_reader, 0, 0, width=pdf_width, height=pdf_height)
+        c.save()
+        print(f"Image {image_path} has been converted to PDF and saved as {pdf_path}")
+    def add_text_to_existing_pdf(input_pdf_path, output_pdf_path, text, position):
+        packet = BytesIO()
+        can = canvas.Canvas(packet, pagesize=letter)
+        can.drawString(position[0], position[1], text)
+        can.save()
+        packet.seek(0)
+        new_pdf = PyPDF2.PdfReader(packet)
+        existing_pdf = PyPDF2.PdfReader(open(input_pdf_path, "rb"))
+        output = PyPDF2.PdfWriter()
+        for i in range(len(existing_pdf.pages)):
+            page = existing_pdf.pages[i]
+            page.merge_page(new_pdf.pages[0])
+            output.add_page(page)
+        with open(output_pdf_path, "wb") as output_stream:
+            output.write(output_stream)
+    image_path = 'scanapp/static/figures/figure.png'
+    pdf_path = 'output.pdf'
+    convert_image_to_pdf(image_path, pdf_path)
+    text = context['access'] + '\n' + context['user_data'] + '\n' + str(context['user_access'])
+    position = (50, 500)
+    add_text_to_existing_pdf(pdf_path, pdf_path, text, position)
+    with open(pdf_path, 'rb') as pdf_file:
+        response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename={os.path.basename(pdf_path)}'
+    return response

@@ -18,7 +18,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from scanapp import views
-from scanapp.views import download_pdf
+from scanapp.views import html_to_pdf_view
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -35,5 +37,9 @@ urlpatterns = [
     path('up-pass', views.code_verify, name='update'),
     path('login', views.conf_pass, name='conf-pass'),
     path('scan-start', views.scan_web, name='scan-web'),
-    path('download_pdf/', download_pdf, name='download_pdf'),
+    path('download_pdf/', html_to_pdf_view, name='download_pdf'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
