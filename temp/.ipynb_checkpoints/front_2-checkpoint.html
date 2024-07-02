@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian Scan - Vulnerability Scanning App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: linear-gradient( #D0D5CE, #001F3F);
+        }
+
+        .header {
+            background-color: #D0D5CE;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .header img {
+            height: 50px;
+        }
+
+        .header nav {
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        .header a {
+            color: #001F3F;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .header a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        .title {
+            text-align: center;
+            margin: 20px 0;
+            color: #34495e;
+        }
+
+        .description {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #36454F;
+        }
+
+        .section {
+            background: #fff;
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #34495e;
+            border-bottom: 2px solid #36454F;
+            padding-bottom: 10px;
+        }
+
+        .section p {
+            margin: 10px 0;
+            line-height: 1.6;
+            color: #36454F;
+        }
+
+        .benefits,
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .benefit,
+        .feature {
+            flex: 1 1 30%;
+            background: #ecf0f1;
+            margin: 10px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit h3,
+        .feature h3 {
+            color: #36454F;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <img src="#" alt="Guardian Scan Logo">
+        <nav>
+            <a href="{% url 'signup' %}">Signup</a>
+            <a href="{% url 'login' %}">Login</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1 class="title">Welcome to Guardian Scan</h1>
+        <p class="description">Your trusted solution for comprehensive vulnerability scanning. Protect your website from
+            potential threats with Guardian Scan.</p>
+
+        <div class="section">
+            <h2>About Guardian Scan</h2>
+            <p>Guardian Scan is a cutting-edge vulnerability scanning application designed to provide robust security for
+                your web assets. Our tool helps you identify and mitigate vulnerabilities before they can be exploited,
+                ensuring your website remains secure and trustworthy.</p>
+        </div>
+
+        <div class="section">
+            <h2>Benefits</h2>
+            <div class="benefits">
+                <div class="benefit">
+                    <h3>Comprehensive Scanning</h3>
+                    <p>Our scanning technology covers all aspects of your website, ensuring no vulnerability goes
+                        unnoticed.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Real-Time Alerts</h3>
+                    <p>Receive instant notifications whenever a new vulnerability is detected, allowing for quick action
+                        and mitigation.</p>
+                </div>
+                <div class="benefit">
+                    <h3>User-Friendly Interface</h3>
+                    <p>Our intuitive interface makes it easy for users of all levels to navigate and utilize the full
+                        potential of our tool.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Features</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>Automated Scans</h3>
+                    <p>Schedule regular scans to automatically check your website for vulnerabilities at your convenience.
+                    </p>
+                </div>
+                <div class="feature">
+                    <h3>Detailed Reports</h3>
+                    <p>Access comprehensive reports that provide detailed insights into each detected vulnerability.</p>
+                </div>
+                <div class="feature">
+                    <h3>Customizable Settings</h3>
+                    <p>Tailor the scanning process to meet your specific needs with a variety of customizable options.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>How It Works</h2>
+            <p>Guardian Scan uses advanced algorithms to analyze your website's code and detect vulnerabilities. Simply
+                enter your website's URL, and our tool will perform a thorough scan, identifying any potential security
+                risks. You'll receive a detailed report highlighting the vulnerabilities and recommended actions to
+                address them.</p>
+        </div>
+
+        <div class="section">
+            <h2>Why Choose Guardian Scan?</h2>
+            <p>Choosing Guardian Scan means opting for a reliable and efficient security solution. Our app not only
+                identifies vulnerabilities but also provides actionable insights to help you enhance your website's
+                security. With Guardian Scan, you can rest assured that your web assets are protected against potential
+                threats.</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        &copy; 2024 Guardian Scan. All Rights Reserved.
+    </footer>
+</body>
+
+</html>

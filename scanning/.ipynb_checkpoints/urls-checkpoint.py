@@ -31,6 +31,7 @@ urlpatterns = [
     path('update-password', views.up_pass, name='up-pass'),
     path('forget-pass', views.forget, name='forget'),
     path('change-pass', views.ver_code, name='code'),
+    path('contact', views.contact, name='contact'),
     path('home', views.signup_def, name='sign-up-def'),
     path('guard-scan', views.login_def, name='log-in-def'),
     path('code', views.forget_email, name='ver_code'),

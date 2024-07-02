@@ -55,6 +55,9 @@ def ver_code(request):
 def up_pass(request):
     return render(request, 'temp/update_password.html')
 
+def contact(request):
+    return render(request, 'temp/contact.html')
+
 def signup_def(request):
     if request.method == 'POST':
         name = request.POST.get('name')
