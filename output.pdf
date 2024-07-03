@@ -25,7 +25,7 @@ endobj
 /Resources <<
 /Font <<
 /F1 6 0 R
-/F1168e3b1c-5787-44a4-a77e-6e8a90a532e9 <<
+/F101aec3b4-c4bf-4909-9064-60147ab463d8 <<
 /BaseFont /Helvetica
 /Encoding /WinAnsiEncoding
 /Name /F1
@@ -37,7 +37,7 @@ endobj
 /XObject <<
 /FormXob.1ad0e03cdb8e19315f7ca4b277cf7569 9 0 R
 >>
-/ProcSet [ /ImageC /ImageI /ImageB /PDF /Text ]
+/ProcSet [ /ImageC /ImageI /Text /ImageB /PDF ]
 >>
 /Rotate 0
 /Trans <<
@@ -69,7 +69,7 @@ W
 n
 1 0 0 1 0 0 cm
 BT
-/F1168e3b1c-5787-44a4-a77e-6e8a90a532e9 12 Tf
+/F101aec3b4-c4bf-4909-9064-60147ab463d8 12 Tf
 14.4 TL
 ET
 BT
@@ -78,13 +78,13 @@ BT
 /F2 12 Tf
 14.4 TL
 (n) Tj
-/F1168e3b1c-5787-44a4-a77e-6e8a90a532e9 12 Tf
+/F101aec3b4-c4bf-4909-9064-60147ab463d8 12 Tf
 14.4 TL
 (User\040data\040is\040properly\040isolated\056) Tj
 /F2 12 Tf
 14.4 TL
 (n) Tj
-/F1168e3b1c-5787-44a4-a77e-6e8a90a532e9 12 Tf
+/F101aec3b4-c4bf-4909-9064-60147ab463d8 12 Tf
 14.4 TL
 (\133\047Access\040to\040profile\040is\040secured\056\047\054\040\047Access\040to\040settings\040is\040secured\056\047\054\040\047Access\040to\040dashboard\040is\040secured\056\047\135) Tj
 T*

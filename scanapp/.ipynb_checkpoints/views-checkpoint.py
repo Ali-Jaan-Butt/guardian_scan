@@ -221,7 +221,7 @@ def scan_web(request):
             chart_html = pio.to_html(fig, full_html=False)
             fig.write_image("scanapp/static/figures/figure.png", format='png')
             screenshot = pyautogui.screenshot()
-            screenshot.save('figure/figure.png')
+            screenshot.save('static/figure.png')
         else:
             print(f"All recommended security headers are present on {url}.")
         # Second Module
