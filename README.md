@@ -64,5 +64,5 @@ Be in the root directory where the manage.py file is located, then
 
 ## Contact
 
-- **Name:** Khula Naeem
+- **Name:** Khola Naeem
 - **Email:** kholanaeem05@gamil.com
