@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vulnerability Scanning</title>
+    <title>Guardian Scan - Vulnerability Scanning</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -13,26 +13,35 @@
             height: 100vh;
             margin: 0;
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(#D0D5CE ,#001F3F);
+            background: linear-gradient(#D0D5CE, #001F3F);
         }
         .container {
             background: #fff;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            width: 400px;
+            padding: 3rem;
+            width: 50%;
+            max-width: 800px;
             text-align: center;
         }
         h1 {
             margin-bottom: 1.5rem;
             color: #333;
+            font-size: 2.5rem;
+        }
+        p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.25rem;
         }
         input, select {
             width: calc(100% - 2rem);
-            padding: 0.5rem;
-            margin: 0.5rem 0;
+            padding: 0.75rem;
+            margin: 1rem 0;
             border: 1px solid #ccc;
             border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
         }
         button {
             width: 100%;
@@ -42,18 +51,25 @@
             border-radius: 5px;
             background: #001F3F;
             color: #fff;
-            font-size: 1rem;
+            font-size: 1.25rem;
             cursor: pointer;
             transition: background 0.3s;
         }
         button:hover {
-            background: #001F3F;
+            background: #003366;
+        }
+        .footer {
+            margin-top: 1rem;
+            color: #666;
+            font-size: 1rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Vulnerability Scanning</h1>
+        <img src="static/images/logo.png" alt="Guardian Scan Logo" style="width: 150px; margin-bottom: 1rem;">
+        <h1>Guardian Scan</h1>
+        <p>Perform a comprehensive vulnerability scan to ensure the security of your web applications.</p>
         <form action="{% url 'scan-web' %}" method="post">
             {% csrf_token %}
             <input type="url" placeholder="Target URL" name="url" required>
@@ -66,6 +82,9 @@
             </select>
             <button type="submit">Start Scan</button>
         </form>
+        <div class="footer">
+            Need help? <a href="{% url 'contact' %}" style="color: #001F3F;">Contact Support</a>
+        </div>
     </div>
 </body>
 </html>

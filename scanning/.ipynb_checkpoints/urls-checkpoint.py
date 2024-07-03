@@ -39,8 +39,5 @@ urlpatterns = [
     path('login', views.conf_pass, name='conf-pass'),
     path('scan-start', views.scan_web, name='scan-web'),
     path('download_pdf/', html_to_pdf_view, name='download_pdf'),
+    path('scanning-start', views.queries, name='query'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

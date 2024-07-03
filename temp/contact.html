@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
     <style>
-        /* Basic styling for demonstration */
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
@@ -41,7 +40,8 @@
 </head>
 <body>
     <h1>Contact Us</h1>
-    <form action="/submit-contact-form" method="POST">
+    <form action="{% url 'query' %}" method="post">
+        {% csrf_token %}
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
         
@@ -57,6 +57,6 @@
         <button type="submit">Send Message</button>
     </form>
     
-    <p>Alternatively, you can reach us at <a href="mailto:contact@example.com">guardianscanpk@gamil.com</a>.</p>
+    <p>Alternatively, you can reach us at <a href="guardianscanpk@gamil.com">guardianscanpk@gamil.com</a>.</p>
 </body>
 </html>

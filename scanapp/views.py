@@ -11,7 +11,6 @@ import plotly.io as pio
 import pandas as pd
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from weasyprint import HTML
 import pyautogui
 from django.core.files.storage import default_storage
 from PIL import Image
@@ -25,6 +24,7 @@ from reportlab.lib.pagesizes import landscape, letter
 from reportlab.lib.utils import ImageReader
 
 def myapp(request):
+    obj = None
     client = pymongo.MongoClient('mongodb://localhost:27017/')
     database_name = "Guardian_Scan"
     db = client[database_name]
@@ -33,8 +33,11 @@ def myapp(request):
     cursor = collection.find()
     for document in cursor:
         obj = document
-    email = { '$set':{'Email':None}}
-    collection.update_one(obj, email)
+    if obj != None:
+        email = { '$set':{'Email':None}}
+        collection.update_one(obj, email)
+    else:
+        collection.insert_one({'Email':None})
     return render(request,"temp/front.html")
 
 def signup(request):
@@ -295,3 +298,18 @@ def html_to_pdf_view(request):
         response = HttpResponse(pdf_file.read(), content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename={os.path.basename(pdf_path)}'
     return response
+
+def queries(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+        query = {'Name':name, 'Email':email, 'Subject':subject, 'Message':message}
+        client = pymongo.MongoClient('mongodb://localhost:27017/')
+        database_name = "Guardian_Scan"
+        db = client[database_name]
+        collection_name = "query"
+        collection = db[collection_name]
+        collection.insert_one(query)
+    return gard_scan(request)
