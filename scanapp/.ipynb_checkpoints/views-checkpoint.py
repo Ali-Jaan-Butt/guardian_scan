@@ -22,6 +22,7 @@ from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import landscape, letter
 from reportlab.lib.utils import ImageReader
+import re
 
 def myapp(request):
     obj = None
@@ -63,17 +64,58 @@ def contact(request):
 
 def signup_def(request):
     if request.method == 'POST':
+        match_email = None
+        new_email = None
         name = request.POST.get('name')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        sign = {'Name':name, 'Email':email, 'Password':password}
         client = pymongo.MongoClient('mongodb://localhost:27017/')
         database_name = "Guardian_Scan"
         db = client[database_name]
         collection_name = "signup"
         collection = db[collection_name]
-        collection.insert_one(sign)
-    return myapp(request)
+        cursor = collection.find()
+        for document in cursor:
+            obj = document
+            if obj['Email'] == email:
+                match_email = email
+                pass
+            else:
+                new_email = email
+        if match_email != None:
+            msg_alert = 'Email already registered.'
+            return render(request, 'temp/signup.html', {'msg_alert':msg_alert})
+        elif new_email != None:
+            def is_strong_password(password):
+                if len(password) < 8:
+                    return False, "Password must be at least 8 characters long."
+                if not re.search(r'[A-Z]', password):
+                    return False, "Password must contain at least one uppercase letter."
+                if not re.search(r'[a-z]', password):
+                    return False, "Password must contain at least one lowercase letter."
+                if not re.search(r'[0-9]', password):
+                    return False, "Password must contain at least one digit."
+                if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+                    return False, "Password must contain at least one special character."
+                return True, "Password is strong."
+            is_strong, message = is_strong_password(password)
+            if is_strong == True:
+                str_pass = password
+                sign = {'Name':name, 'Email':new_email, 'Password':str_pass}
+                client = pymongo.MongoClient('mongodb://localhost:27017/')
+                database_name = "Guardian_Scan"
+                db = client[database_name]
+                collection_name = "signup"
+                collection = db[collection_name]
+                collection.insert_one(sign)
+                return myapp(request)
+            else:
+                msg_alert = 'Password must contain upper case, digit, and a symbol.'
+                return render(request, 'temp/signup.html', {'msg_alert':msg_alert})
+        else:
+            msg_alert = 'Email already registered.'
+            return render(request, 'temp/signup.html', {'msg_alert':msg_alert})
+    return signup(request)
 
 def login_def(request):
     if request.method == 'POST':

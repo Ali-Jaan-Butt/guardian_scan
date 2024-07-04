@@ -53,6 +53,9 @@
             margin-top: 1rem;
             color: #666;
         }
+        .alert{
+            color: Red;
+        }
     </style>
 </head>
 <body>
@@ -65,6 +68,9 @@
             <input type="password" placeholder="Password" name="password" required>
             <button type="submit">Create Account</button>
         </form>
+        <div class="alert">
+            {{ msg_alert }}
+        </div>
         <div class="footer">
             Already have an account? <a href="{% url 'login' %}">Login</a>
         </div>
